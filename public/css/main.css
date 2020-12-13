@@ -4,9 +4,14 @@ body {
   --white: #fbfbfb;
   --dark: #2e2532;
   --black: #201a23;
-  
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0;
+  margin: 0;  
 }
-
 
 .product-card figure {
   text-align: center;
@@ -15,6 +20,7 @@ body {
 
 .navbar ul.social {
   display: flex;
+  title-color: var(--white)
 }
 
 .navbar ul.social li {

@@ -2,7 +2,7 @@ const express = require("express");
 const cartsRepo = require("../repositories/carts");
 const productsRepo = require("../repositories/products");
 const cartShowTemplate = require("../views/carts/show");
-
+const orderConfirmedTemplate = require('../views/orderConfirmed')
 const connection = require("../db/db_config");
 
 const router = express.Router();
@@ -53,6 +53,16 @@ router.post("/cart/:id/update", (req, res) => {
     }
     res.redirect("/cart");
   });
+});
+
+router.get("/order_confirmed", (req, res) => {
+    const stmt = `DELETE FROM cart`;
+    connection.query(stmt, (err, result) => {
+      if(err){
+        console.log(err)
+      }
+      return res.send(orderConfirmedTemplate({}));
+    })
 });
 
 module.exports = router;

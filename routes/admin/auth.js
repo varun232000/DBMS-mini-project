@@ -6,6 +6,7 @@ const signupTemplate = require("../../views/admin/auth/signup");
 const signinTemplate = require("../../views/admin/auth/signin");
 const signupTemplateuser = require("../../views/admin/auth/signupuser");
 const sellersTemplate = require("../../views/sellers/sellers");
+const adminSignInTemplate = require("../../views/admin/auth/adminSignIn");
 
 const {
   requireEmail,
@@ -112,7 +113,20 @@ router.post(
   }
 );
 
-// router.post("/cart", (req,res)=>{
+router.post("/admin/signin", (req, res) => {
+  const { email, password } = req.body;
+  const stmt =
+    "SELECT EMAIL, PASSWORD FROM ADMINS WHERE EMAIL=? AND PASSWORD=?";
+  connection.query(stmt, [email, password], (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    return res.redirect("/admin/products");
+  });
+});
 
-// })
+router.get("/admin/signin", (req, res) => {
+  return res.send(adminSignInTemplate({}));
+});
+
 module.exports = router;

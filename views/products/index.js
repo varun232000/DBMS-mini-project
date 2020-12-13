@@ -21,7 +21,7 @@ module.exports = ({ products }) => {
                   <i class="fa fa-shopping-cart"></i> Add to cart
                 </button>
               </form>
-              <p>${product.stock} Left</p>
+              <p>${product.stock>0?'In stock': 'Out of stock'} </p>
             </footer>
           </div>
         </div>

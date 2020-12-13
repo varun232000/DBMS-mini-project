@@ -7,9 +7,6 @@ module.exports = ({ req, errors }) => {
       <div class="container">
         <div class="columns is-centered">
         <div>
-                
-        <h4 class="title">"Fashion you can buy, but style you possess. The key to style is learning who you are, which takes years. There's no how-to road map to style. It's about self expression and, above all, attitude." —Iris Apfel</h4>
-      
     </div>
           <div class="column is-one-quarter">
             <form method="POST" action="/user/signup">
@@ -59,8 +56,6 @@ module.exports = ({ req, errors }) => {
             <a href="/user/signin">Have an account? Sign In</a>
           </div>
         </div>
-        <h1 class="title">Wanna Go Back Home?</h1>
-        <ul><a href="/"><button class="button is-primary" input type="submit">Take Me Home</button></a><ul>
       </div>
       
     `,

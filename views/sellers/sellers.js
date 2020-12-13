@@ -38,10 +38,7 @@ module.exports = ({ sellers }) => {
           </div>
           <div class="column "></div>
         </div>
-        
       </div>
-      <h1 class="title">Wanna Go Back Home?</h1>
-        <ul><a href="/"><button class="button is-primary" input type="submit">Take Me Home</button></a><ul>
     </section>
   `,
   });

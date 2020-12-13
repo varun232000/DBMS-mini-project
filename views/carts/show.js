@@ -11,7 +11,7 @@ module.exports = ({ products }) => {
         <td>${product.quantity}</td>
         <td>${product.price}</td>
         <td>
-        <div class="field has-addons">
+        <div class="field has-addons ">
 
             <form method="POST" action="/cart/${product.product_id}/update">
               <input type="hidden" value=${
@@ -35,15 +35,14 @@ module.exports = ({ products }) => {
 
   return layout({
     content: `
-  <div class="container">
-  <table class="table">
+  <div class="container" style="align-items: center; display: flex; flex-direction: column">
+  <table class="table container">
     <thead>
       <tr>
         <th>Title</th>
         <th>Quantity</th>
         <th>Price</th>
         <th>Alter</th>
-
       </tr>
     </thead>
     <tbody>
@@ -54,7 +53,11 @@ module.exports = ({ products }) => {
       <span class="icon is-small">
       <i class="far fa-credit-card fa-bold"></i>
       </span>
-      <span>Checkout</span>
+        <span>
+          <a href="/order_confirmed">
+            Checkout
+          </a>
+        </span>
     </button>
     </div>
     `,
