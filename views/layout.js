@@ -10,7 +10,6 @@ module.exports = ({ content }) => {
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
         <link href="/css/main.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"></link>
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       </head>
       <body>
         <header>

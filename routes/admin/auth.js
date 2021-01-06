@@ -7,6 +7,7 @@ const signinTemplate = require("../../views/admin/auth/signin");
 const signupTemplateuser = require("../../views/admin/auth/signupuser");
 const sellersTemplate = require("../../views/sellers/sellers");
 const adminSignInTemplate = require("../../views/admin/auth/adminSignIn");
+const crypto = require("crypto");
 
 const {
   requireEmail,
@@ -29,7 +30,12 @@ router.post(
   (req, res) => {
     const { email, password } = req.body;
     const stmt = `INSERT INTO admins(email, password) VALUES(?,?)`;
-    const data = [email, password];
+    // crypto.get
+    const encryptedPassword = crypto
+      .createHmac("sha256", password)
+      .update(process.env.CRYPTO_PASSWORD)
+      .digest("hex");
+    const data = [email, encryptedPassword];
 
     connection.query(stmt, data, (error, results, fields) => {
       if (error) {
@@ -60,13 +66,17 @@ router.post(
       city,
       zip,
     } = req.body;
+    const encryptedPassword = crypto
+      .createHmac("sha256", password)
+      .update(process.env.CRYPTO_PASSWORD)
+      .digest("hex");
 
-    const stmt1 = `INSERT INTO users(fname,lname,email,password,u_phone_no,gender,house_no,street,city,zip) values("${fname}","${lname}","${email}","${password}",${u_phone_no},"${gender}",${house_no},"${street}","${city}",${zip})`;
+    const stmt1 = `INSERT INTO users(fname,lname,email,password,u_phone_no,gender,house_no,street,city,zip) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     const data1 = [
       fname,
       lname,
       email,
-      password,
+      encryptedPassword,
       u_phone_no,
       gender,
       house_no,
@@ -98,7 +108,11 @@ router.post(
   handleErrors(signinTemplate),
   (req, res) => {
     const { email, password } = req.body;
-    const enter = `SELECT email,password from users where email = "${email}" and password = "${password}"`;
+    const encryptedPassword = crypto
+      .createHmac("sha256", password)
+      .update(process.env.CRYPTO_PASSWORD)
+      .digest("hex");
+    const enter = `SELECT email,password from users where email = "${email}" and password = "${encryptedPassword}"`;
 
     connection.query(enter, [email, password], (error, results, fields) => {
       if (error) {
@@ -115,11 +129,20 @@ router.post(
 
 router.post("/admin/signin", (req, res) => {
   const { email, password } = req.body;
+  const encryptedPassword = crypto
+    .createHmac("sha256", password)
+    .update(process.env.CRYPTO_PASSWORD)
+    .digest("hex");
+  console.log(encryptedPassword);
   const stmt =
     "SELECT EMAIL, PASSWORD FROM ADMINS WHERE EMAIL=? AND PASSWORD=?";
-  connection.query(stmt, [email, password], (err, result) => {
+  connection.query(stmt, [email, encryptedPassword], (err, result) => {
     if (err) {
       console.log(err);
+      return res.redirect("/admin/signin");
+    }
+    if (result.length < 1) {
+      return res.redirect("/admin/signin");
     }
     return res.redirect("/admin/products");
   });

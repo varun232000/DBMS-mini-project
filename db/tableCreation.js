@@ -22,7 +22,7 @@ const createTable = (qStmt) => {
   let createAdminTable = `create table if not exists admins(
       admin_id int primary key auto_increment,
       admin_phone_number int(10),
-      password varchar(50),
+      password varchar(200),
       email varchar(50) unique
     )`;
   createTable(createAdminTable);

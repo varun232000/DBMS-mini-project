@@ -19,7 +19,7 @@ connection.connect(function (err) {
     fname varchar(10),
     lname varchar(50),
     email varchar(50) unique,
-    password varchar(10),
+    password varchar(200),
     u_phone_no int(10),
     gender varchar(6),
     house_no int(5),
