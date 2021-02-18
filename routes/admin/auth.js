@@ -112,7 +112,7 @@ router.post(
       .createHmac("sha256", password)
       .update(process.env.CRYPTO_PASSWORD)
       .digest("hex");
-    const enter = `SELECT email,password from users where email = "${email}" and password = "${encryptedPassword}"`;
+    const enter = `SELECT email,password, user_id from users where email = "${email}" and password = "${encryptedPassword}"`;
 
     connection.query(enter, [email, password], (error, results, fields) => {
       if (error) {
@@ -120,6 +120,10 @@ router.post(
       } else if (results.length < 1) {
         return res.send(signinTemplate({ errors: "can't find the user" }));
       }
+
+      req.session.loggedin = true;
+      req.session.user_id = results[0].user_id;
+      console.log(req.session);
       return res.redirect("/");
     });
     // const user = await usersRepo.getOneBy({ email });
@@ -144,6 +148,7 @@ router.post("/admin/signin", (req, res) => {
     if (result.length < 1) {
       return res.redirect("/admin/signin");
     }
+
     return res.redirect("/admin/products");
   });
 });

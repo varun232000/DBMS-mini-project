@@ -2,13 +2,17 @@ const express = require("express");
 const cartsRepo = require("../repositories/carts");
 const productsRepo = require("../repositories/products");
 const cartShowTemplate = require("../views/carts/show");
-const orderConfirmedTemplate = require('../views/orderConfirmed')
+const orderConfirmedTemplate = require("../views/orderConfirmed");
 const connection = require("../db/db_config");
 
 const router = express.Router();
 
 // Receive a post request to add an item to a cart
 router.post("/cart/add", (req, res) => {
+  if (!req.session.loggedin) {
+    console.log(req.session);
+    return res.redirect("/user/signin");
+  }
   const { product_id } = req.body;
   let productQuantity = 0;
   const selectStmt = "SELECT * FROM cart WHERE product_id=?";
@@ -56,13 +60,13 @@ router.post("/cart/:id/update", (req, res) => {
 });
 
 router.get("/order_confirmed", (req, res) => {
-    const stmt = `DELETE FROM cart`;
-    connection.query(stmt, (err, result) => {
-      if(err){
-        console.log(err)
-      }
-      return res.send(orderConfirmedTemplate({}));
-    })
+  const stmt = `DELETE FROM cart`;
+  connection.query(stmt, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    return res.send(orderConfirmedTemplate({}));
+  });
 });
 
 module.exports = router;
