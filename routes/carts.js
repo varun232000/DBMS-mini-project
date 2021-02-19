@@ -18,17 +18,29 @@ router.post("/cart/add", (req, res) => {
   const selectStmt = "SELECT * FROM cart WHERE product_id=?";
 
   connection.query(selectStmt, [product_id], (err, result) => {
-    let stmt = "INSERT INTO cart(quantity, product_id) VALUES(?, ?)";
+    let stmt =
+      "INSERT INTO cart(quantity, product_id, user_id) VALUES(?, ?, ?)";
+
     if (result.length > 0) {
-      stmt = "UPDATE cart SET quantity=? where product_id=?";
+      stmt = "UPDATE cart SET quantity=? where product_id=? and user_id=?";
       productQuantity = result[0].quantity;
     }
-    connection.query(stmt, [productQuantity + 1, product_id], (result, err) => {
-      if (err) {
-        console.log(err);
+    console.log("is it working?");
+    console.log(stmt, [
+      productQuantity + 1,
+      Number(product_id),
+      req.session.user_id,
+    ]);
+    connection.query(
+      stmt,
+      [productQuantity + 1, product_id, req.session.user_id],
+      (result, err) => {
+        if (err) {
+          console.log(err);
+        }
+        return res.redirect("/");
       }
-      return res.redirect("/");
-    });
+    );
   });
 });
 

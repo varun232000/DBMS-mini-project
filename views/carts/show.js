@@ -9,7 +9,7 @@ module.exports = ({ products }) => {
         ${product.title}</div>
         </td>
         <td>${product.quantity}</td>
-        <td>${product.price}</td>
+        <td>${product.price * product.quantity}</td>
         <td>
         <div class="field has-addons ">
 

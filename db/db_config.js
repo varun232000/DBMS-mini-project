@@ -50,6 +50,7 @@ connection.connect(function (err) {
   let createcart = `create table if not exists cart(
     product_id int primary key unique,
     quantity int(2),
+    user_id int(10),
     FOREIGN KEY (product_id) REFERENCES products(product_id)
    )`;
   connection.query(createcart, function (err, results, fields) {
